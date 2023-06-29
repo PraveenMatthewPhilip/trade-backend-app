@@ -1,16 +1,15 @@
-package com.tradeapp.trade.signal;
+package com.tradeapp.trade.signalstore;
 
 import com.tradeapp.backend.Algo;
 import org.springframework.stereotype.Service;
 
 
 @Service
-public class SignalThree implements Signal{
+public class SignalTwo implements Signal{
     @Override
     public void processSignal(Algo algo) {
-        algo.setAlgoParam(1, 90);
-        algo.setAlgoParam(2, 15);
-        algo.performCalc();
+        algo.reverse();
+        algo.setAlgoParam(1, 80);
         algo.submitToMarket();
     }
 }

@@ -1,4 +1,4 @@
-package com.tradeapp.trade.signal;
+package com.tradeapp.trade.signalstore;
 
 import com.tradeapp.backend.Algo;
 

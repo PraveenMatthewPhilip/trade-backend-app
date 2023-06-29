@@ -13,9 +13,6 @@ public class SignalController {
     @Autowired
     private SignalService signalService;
 
-    @Autowired
-    private Algo algo;
-
     @PostMapping("/{signal}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void processSignal(@PathVariable Integer signal) {

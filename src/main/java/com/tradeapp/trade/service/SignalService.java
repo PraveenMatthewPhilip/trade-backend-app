@@ -2,10 +2,10 @@ package com.tradeapp.trade.service;
 
 import com.tradeapp.backend.Algo;
 import com.tradeapp.trade.exception.SignalUndefined;
-import com.tradeapp.trade.signal.Signal;
-import com.tradeapp.trade.signal.SignalOne;
-import com.tradeapp.trade.signal.SignalThree;
-import com.tradeapp.trade.signal.SignalTwo;
+import com.tradeapp.trade.signalstore.Signal;
+import com.tradeapp.trade.signalstore.SignalOne;
+import com.tradeapp.trade.signalstore.SignalThree;
+import com.tradeapp.trade.signalstore.SignalTwo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

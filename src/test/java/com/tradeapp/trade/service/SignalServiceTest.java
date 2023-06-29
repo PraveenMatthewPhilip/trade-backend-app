@@ -1,11 +1,11 @@
-package com.tradeapp.trade.controller.service;
+package com.tradeapp.trade.service;
 
 
 import com.tradeapp.backend.Algo;
 import com.tradeapp.trade.exception.SignalUndefined;
 import com.tradeapp.trade.service.SignalService;
-import com.tradeapp.trade.signal.Signal;
-import com.tradeapp.trade.signal.SignalOne;
+import com.tradeapp.trade.signalstore.Signal;
+import com.tradeapp.trade.signalstore.SignalOne;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
