@@ -4,6 +4,8 @@ import com.tradeapp.backend.Algo;
 import com.tradeapp.trade.exception.SignalUndefined;
 import com.tradeapp.trade.signal.Signal;
 import com.tradeapp.trade.signal.SignalOne;
+import com.tradeapp.trade.signal.SignalThree;
+import com.tradeapp.trade.signal.SignalTwo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ public class SignalService {
     public SignalService() {
         signalMap = new HashMap<>();
         signalMap.put(1, new SignalOne());
+        signalMap.put(2, new SignalTwo());
+        signalMap.put(3, new SignalThree());
     }
 
     public void executeSignal(Integer signal) {
