@@ -15,7 +15,7 @@ public class SignalController {
 
     @PostMapping("/{signal}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void processSignal(@PathVariable Long signal) {
-        signalService.executeSignal(signal);
+    public void processSignal(@PathVariable Long signalId) {
+        signalService.executeSignal(signalId);
     }
 }

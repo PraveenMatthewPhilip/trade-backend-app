@@ -26,8 +26,8 @@ public class SignalService {
         signalMap.put(3L, new SignalThree());
     }
 
-    public void executeSignal(Long signal) {
-        final Signal signalTask = signalMap.getOrDefault(signal, signalMap.get(null));
+    public void executeSignal(Long signalId) {
+        final Signal signalTask = signalMap.getOrDefault(signalId, signalMap.get(null));
         executorService.submit(() -> {
             signalTask.processSignal(algo);
             algo.doAlgo();
