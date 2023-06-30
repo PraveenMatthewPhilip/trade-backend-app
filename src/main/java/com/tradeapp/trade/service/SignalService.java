@@ -6,16 +6,20 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 @Service
 public class SignalService {
 
     private final Algo algo;
 
+    private final ExecutorService executorService;
+
     private final Map<Long, Signal> signalMap;
 
-    public SignalService(Algo algo) {
+    public SignalService(Algo algo, ExecutorService executorService) {
         this.algo = algo;
+        this.executorService = executorService;
 
         signalMap = new HashMap<>();
         signalMap.put(null, new SignalDefault());
@@ -26,15 +30,10 @@ public class SignalService {
 
     public void executeSignal(Long signal) {
 
-        Signal signalTask = signalMap.get(signal);
-
-        if (signalTask != null) {
+        final Signal signalTask = signalMap.getOrDefault(signal, signalMap.get(null));
+        executorService.submit(() -> {
             signalTask.processSignal(algo);
-        } else {
-            signalTask = signalMap.get(null);
-            signalTask.processSignal(algo);
-        }
-
-        algo.doAlgo();
+            algo.doAlgo();
+        });
     }
 }
