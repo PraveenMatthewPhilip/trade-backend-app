@@ -2,9 +2,8 @@ package com.tradeapp.trade.service;
 
 
 import com.tradeapp.backend.Algo;
-import com.tradeapp.trade.exception.SignalUndefined;
-import com.tradeapp.trade.service.SignalService;
 import com.tradeapp.trade.signalstore.Signal;
+import com.tradeapp.trade.signalstore.SignalDefault;
 import com.tradeapp.trade.signalstore.SignalOne;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,6 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 
 public class SignalServiceTest {
@@ -25,6 +23,8 @@ public class SignalServiceTest {
     private Algo algo;
     @Mock
     private SignalOne signalOne;
+    @Mock
+    private SignalDefault signalDefault;
     @InjectMocks
     private SignalService signalService;
 
@@ -33,20 +33,24 @@ public class SignalServiceTest {
         MockitoAnnotations.openMocks(this);
         Field signalFieldMap = SignalService.class.getDeclaredField("signalMap");
         signalFieldMap.setAccessible(true);
-        Map<Integer, Signal> signalMap = new HashMap<>();
-        signalMap.put(1, signalOne);
+        Map<Long, Signal> signalMap = new HashMap<>();
+        signalMap.put(null, signalDefault);
+        signalMap.put(1L, signalOne);
         signalFieldMap.set(signalService, signalMap);
 
     }
 
     @Test
     public void executeSignal_withValidSignal_callsSignal() {
-        signalService.executeSignal(1);
+        signalService.executeSignal(1L);
         verify(signalOne).processSignal(algo);
+        verify(algo).doAlgo();
     }
 
     @Test
-    public void executeSignal_withInvalidSignal_throwsException() {
-        assertThrows(SignalUndefined.class, () -> signalService.executeSignal(3));
+    public void executeSignal_withUndefined_callsDefaultSignal() {
+        signalService.executeSignal(999L);
+        verify(signalDefault).processSignal(algo);
+        verify(algo).doAlgo();
     }
 }

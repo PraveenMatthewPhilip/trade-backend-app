@@ -1,12 +1,7 @@
 package com.tradeapp.trade.service;
 
 import com.tradeapp.backend.Algo;
-import com.tradeapp.trade.exception.SignalUndefined;
-import com.tradeapp.trade.signalstore.Signal;
-import com.tradeapp.trade.signalstore.SignalOne;
-import com.tradeapp.trade.signalstore.SignalThree;
-import com.tradeapp.trade.signalstore.SignalTwo;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.tradeapp.trade.signalstore.*;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -15,26 +10,31 @@ import java.util.Map;
 @Service
 public class SignalService {
 
-    @Autowired
-    private Algo algo;
+    private final Algo algo;
 
-    private Map<Integer, Signal> signalMap;
+    private final Map<Long, Signal> signalMap;
 
-    public SignalService() {
+    public SignalService(Algo algo) {
+        this.algo = algo;
+
         signalMap = new HashMap<>();
-        signalMap.put(1, new SignalOne());
-        signalMap.put(2, new SignalTwo());
-        signalMap.put(3, new SignalThree());
+        signalMap.put(null, new SignalDefault());
+        signalMap.put(1L, new SignalOne());
+        signalMap.put(2L, new SignalTwo());
+        signalMap.put(3L, new SignalThree());
     }
 
-    public void executeSignal(Integer signal) {
+    public void executeSignal(Long signal) {
 
         Signal signalTask = signalMap.get(signal);
 
-        if(signalTask != null) {
+        if (signalTask != null) {
             signalTask.processSignal(algo);
         } else {
-            throw new SignalUndefined("Signal " + signal + " is undefined");
+            signalTask = signalMap.get(null);
+            signalTask.processSignal(algo);
         }
+
+        algo.doAlgo();
     }
 }

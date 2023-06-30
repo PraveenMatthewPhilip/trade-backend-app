@@ -5,11 +5,9 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class SignalTwo implements Signal {
+public class SignalDefault implements Signal {
     @Override
     public void processSignal(Algo algo) {
-        algo.reverse();
-        algo.setAlgoParam(1, 80);
-        algo.submitToMarket();
+        algo.cancelTrades();
     }
 }

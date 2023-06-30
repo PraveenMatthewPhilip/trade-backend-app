@@ -24,8 +24,8 @@ class SignalControllerTest {
 
 	@Test
 	void executeSignal_withValidInput_callsSignalService() {
-		signalController.processSignal(1);
-		verify(signalService).executeSignal(1);
+		signalController.processSignal(1L);
+		verify(signalService).executeSignal(1L);
 	}
 
 }
