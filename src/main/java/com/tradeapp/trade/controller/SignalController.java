@@ -4,6 +4,10 @@ import com.tradeapp.trade.service.SignalService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller class responsible for handling the signal
+ */
+
 @RestController
 @RequestMapping("/signal")
 public class SignalController {
@@ -13,6 +17,11 @@ public class SignalController {
         this.signalService = signalService;
     }
 
+    /**
+     * Receive singalId as Path Variable from the POST request and passes it to the Signal Service
+     *
+     * @param signalId The ID of the signal to be processed.
+     */
     @PostMapping("/{signal}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void processSignal(@PathVariable Long signalId) {

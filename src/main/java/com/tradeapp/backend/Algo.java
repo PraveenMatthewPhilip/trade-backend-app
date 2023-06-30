@@ -1,5 +1,8 @@
 package com.tradeapp.backend;
 
+/**
+ * the ‘Algo’ class belongs to the Trading Algo library and cannot be modified.
+ */
 public class Algo {
 
     public void doAlgo() {
