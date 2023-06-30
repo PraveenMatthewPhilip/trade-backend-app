@@ -1,11 +1,9 @@
 package com.tradeapp.trade.service;
 
 import com.tradeapp.backend.Algo;
-import com.tradeapp.trade.signalstore.*;
+import com.tradeapp.trade.signalstore.Signal;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -14,25 +12,18 @@ import java.util.concurrent.ExecutorService;
 @Service
 public class SignalService {
 
+    private final SignalMapping signalMapping;
     private final Algo algo;
     private final ExecutorService executorService;
-    private final Map<Long, Signal> signalMap;
 
-    public SignalService(Algo algo, ExecutorService executorService) {
+    public SignalService(SignalMapping signalMapping,
+                         Algo algo,
+                         ExecutorService executorService) {
+        this.signalMapping = signalMapping;
         this.algo = algo;
         this.executorService = executorService;
-
-        /**
-         * Newly added signals are mapped here, default signal is mapped to null value
-         */
-
-        //TODO - Extract Signal Mapping as a Service
-        signalMap = new HashMap<>();
-        signalMap.put(null, new SignalDefault());
-        signalMap.put(1L, new SignalOne());
-        signalMap.put(2L, new SignalTwo());
-        signalMap.put(3L, new SignalThree());
     }
+
 
     /**
      * Executes a signal task asynchronously based on the provided signal ID.
@@ -40,7 +31,7 @@ public class SignalService {
      * @param signalId The ID of the signal task to be executed.
      */
     public void executeSignal(Long signalId) {
-        final Signal signalTask = signalMap.getOrDefault(signalId, signalMap.get(null));
+        final Signal signalTask = signalMapping.getSignalImplementationBySignalId(signalId);
         executorService.submit(() -> {
             signalTask.processSignal(algo);
             algo.doAlgo();
