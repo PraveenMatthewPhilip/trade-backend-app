@@ -12,9 +12,7 @@ import java.util.concurrent.ExecutorService;
 public class SignalService {
 
     private final Algo algo;
-
     private final ExecutorService executorService;
-
     private final Map<Long, Signal> signalMap;
 
     public SignalService(Algo algo, ExecutorService executorService) {
@@ -29,7 +27,6 @@ public class SignalService {
     }
 
     public void executeSignal(Long signal) {
-
         final Signal signalTask = signalMap.getOrDefault(signal, signalMap.get(null));
         executorService.submit(() -> {
             signalTask.processSignal(algo);
