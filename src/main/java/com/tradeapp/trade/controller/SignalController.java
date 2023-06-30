@@ -22,7 +22,7 @@ public class SignalController {
      *
      * @param signalId The ID of the signal to be processed.
      */
-    @PostMapping("/{signal}")
+    @PostMapping("/{signalId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void processSignal(@PathVariable Long signalId) {
         signalService.executeSignal(signalId);

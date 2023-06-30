@@ -1,12 +1,10 @@
 package com.tradeapp.trade.signalstore;
 
 import com.tradeapp.backend.Algo;
-import org.springframework.stereotype.Service;
 
 /**
  * Implementation for algo processing when signalID = 3
  */
-@Service
 public class SignalThree implements Signal {
     @Override
     public void processSignal(Algo algo) {
